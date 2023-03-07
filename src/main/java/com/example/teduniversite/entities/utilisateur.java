@@ -3,7 +3,8 @@ package com.example.teduniversite.entities;
 import jakarta.persistence.*;
 @Table(name="utilisateur")
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance (strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="utilisateur_type")
 public class utilisateur {
 
         @Id
