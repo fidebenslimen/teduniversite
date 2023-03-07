@@ -11,22 +11,8 @@ import java.util.List;
 @Service
 public class SuperadminServices implements Isuperadmin{
     @Autowired
-    private AdminRepository SuperAdmin;
-    @Override
-    public List<admin> AfficherAllAdmins() {
-        List<admin> listAdmin= SuperAdmin.findAll();
-         for ( admin c:listAdmin )
-        {
-            System.out.println("Admin:" + c.getNom()+ c.getPrenom());
-        }
-        return listAdmin;
+    private AdminRepository adminrepository;
 
-    }
-
-    @Override
-    public admin ajouterAdmin(admin ad) {
-        return null;
-    }
 
     @Override
     public void deleteAdmin(Integer id) {

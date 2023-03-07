@@ -1,10 +1,12 @@
 package com.example.teduniversite.entities;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Table(name="etudiants")
 @Entity
+@DiscriminatorValue("E")
 public class etudiant extends utilisateur {
     private int nbr_abs ;
     public etudiant() {

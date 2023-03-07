@@ -1,5 +1,9 @@
 package com.example.teduniversite.entities;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("SA")
 public class superadmin extends utilisateur{
     public superadmin() {
     }

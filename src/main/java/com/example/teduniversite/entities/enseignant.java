@@ -1,5 +1,10 @@
 package com.example.teduniversite.entities;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("EN")
 public class enseignant extends utilisateur {
 private int nbr_cours;
 private String spécialité;
@@ -13,6 +18,10 @@ private String spécialité;
         super(id, nom, prenom, mail, telephone, cin, mdp, role);
         this.nbr_cours = nbr_cours;
         this.spécialité = spécialité;
+
+    }
+
+    public enseignant() {
 
     }
 

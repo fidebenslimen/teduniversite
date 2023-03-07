@@ -1,24 +1,50 @@
 package com.example.teduniversite.services;
+import com.example.teduniversite.entities.admin;
 import com.example.teduniversite.entities.enseignant;
 import com.example.teduniversite.entities.etudiant;
+import com.example.teduniversite.repository.AdminRepository;
 import com.example.teduniversite.repository.etudiantrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class adminservicesIMPL implements Iadmin{
 
+
     @Autowired
-    private etudiantrepository etudiant_repository;
+    private AdminRepository adminRepository;
 
 
     @Override
-    public enseignant ajouterEnseignant(enseignant en) {
-        return null;
+    public List<admin> AfficherAllAdmins() {
+
+
+        List<admin> listadmins= adminRepository.findAll();
+       return listadmins;
     }
+
     @Override
-    public enseignant updateEnseignant(enseignant en) {
+    public admin afficherAdmin(Integer id) {
         return null;
     }
+
+    @Override
+    public admin ajouterAdmin(admin ad) {
+        adminRepository.save(ad);
+        return ad;
+    }
+
+    @Override
+    public void deleteAdmin(Integer id) {
+
+    }
+
+    @Override
+    public admin updateAdmin(admin ad) {
+        return null;
+    }
+
 
 }
