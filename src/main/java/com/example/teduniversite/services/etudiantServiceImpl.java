@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class etudiantServiceImpl implements Ietudiant{
-
+    @Autowired
      etudiantrepository etudiantrepository;
     @Override
     public List<etudiant> AfficherAllEtudiant(){
