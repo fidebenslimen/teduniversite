@@ -27,7 +27,8 @@ public class adminservicesIMPL implements Iadmin{
 
     @Override
     public admin afficherAdmin(Integer id) {
-        return null;
+        admin a = adminRepository.findById(id).get();
+        return a;
     }
 
     @Override
@@ -38,12 +39,14 @@ public class adminservicesIMPL implements Iadmin{
 
     @Override
     public void deleteAdmin(Integer id) {
+        adminRepository.deleteById(id);
 
     }
 
     @Override
     public admin updateAdmin(admin ad) {
-        return null;
+        adminRepository.save(ad);
+        return ad;
     }
 
 

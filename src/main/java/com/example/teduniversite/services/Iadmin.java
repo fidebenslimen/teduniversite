@@ -9,7 +9,7 @@ import java.util.List;
 public interface Iadmin {
     public List<admin> AfficherAllAdmins();
     admin afficherAdmin(Integer id);
-    admin ajouterAdmin(admin ad );
+    admin ajouterAdmin(admin ad);
     void deleteAdmin(Integer id);
 
     admin updateAdmin(admin ad);
