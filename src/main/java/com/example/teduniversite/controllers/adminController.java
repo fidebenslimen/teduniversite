@@ -16,11 +16,25 @@ public class adminController {
 
     @GetMapping("/AfficherAllAdmins")
     public List<admin> AfficherAllAdmins() {
-        return adminServices.AfficherAllAdmins();
+        List<admin> listAdmins = adminServices.AfficherAllAdmins();
+        return listAdmins;
     }
+    @RequestMapping(value="/{id}",method = RequestMethod.GET)
+    public admin afficheAdmin(@PathVariable("id") Integer id) {
+
+        return adminServices.afficherAdmin(id);
+    }
+
     @PostMapping("ajouterAdmin")
     public admin ajouterAdmin(@RequestBody admin ad) {
         return adminServices.ajouterAdmin(ad);
+    }
+    @DeleteMapping("deleteAdmin")
+    public void deleteAdmin(Integer id){
+        adminServices.deleteAdmin(id);}
+    @PutMapping("updateAdmin")
+    admin updateAdmin(admin ad){
+        return adminServices.updateAdmin(ad);
     }
 
 }
