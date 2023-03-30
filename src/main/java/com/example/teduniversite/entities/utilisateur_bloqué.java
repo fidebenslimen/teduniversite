@@ -1,35 +1,28 @@
 package com.example.teduniversite.entities;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.time.LocalDateTime;
 import java.util.Date;
+@Entity
+@Data
+@ToString
+@Getter
+@Setter
+public class utilisateur_bloqué {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-public class utilisateur_bloqué extends utilisateur {
-    private Date date;
-    private type_bloque type;
+    private LocalDateTime lastFailedLoginAttempt;
 
-    public Date getDate() {
-        return date;
-    }
+    private LocalDateTime expiryTime;
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
-    public type_bloque getType() {
-        return type;
-    }
-
-    public void setType(type_bloque type) {
-        this.type = type;
-    }
-
-    public utilisateur_bloqué(Date date, type_bloque type) {
-        this.date = date;
-        this.type = type;
-    }
-
-    public utilisateur_bloqué(int id, String nom, String prenom, String mail, String telephone, String cin, String mdp, String role, Date date, type_bloque type) {
-        super(id, nom, prenom, mail, telephone, cin, mdp, role);
-        this.date = date;
-        this.type = type;
-    }
+@OneToOne
+    private utilisateur user;
 }

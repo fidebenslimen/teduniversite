@@ -1,26 +1,48 @@
 package com.example.teduniversite.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-@Table(name="utilisateur")
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
 @Entity
-@Inheritance (strategy=InheritanceType.JOINED)
+
 @DiscriminatorColumn(name="utilisateur_type")
 public class utilisateur {
-
         @Id
-        @GeneratedValue(
-                strategy = GenerationType.IDENTITY
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Getter
+        @Setter
 
-        )
-
-        private int id;
+        private long id;
         private String nom;
 
         private String prenom;
         private String mail;
+        private String username;
         private String telephone;
         private String cin;
         private String mdp;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    private Set<Role> roles = new HashSet<>();
+
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    private utilisateur_bloqué ban;
 
 
 
@@ -28,11 +50,12 @@ public class utilisateur {
     public utilisateur() {
         }
 
-        public utilisateur(int id, String nom, String prenom, String mail, String telephone, String cin, String mdp, String role) {
+        public utilisateur(int id, String nom, String prenom, String mail,String username, String telephone, String cin, String mdp, String role) {
             this.id = id;
             this.nom = nom;
             this.prenom = prenom;
             this.mail = mail;
+            this.username=username;
             this.telephone = telephone;
             this.cin = cin;
             this.mdp = mdp;
@@ -51,59 +74,7 @@ public class utilisateur {
                     '}';
         }
 
-    public String getTelephone() {
-        return telephone;
-    }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getCin() {
-        return cin;
-    }
-
-    public void setCin(String cin) {
-        this.cin = cin;
-    }
-
-    public String getMdp() {
-        return mdp;
-    }
-
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
-    }
 }
