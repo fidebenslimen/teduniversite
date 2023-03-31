@@ -1,13 +1,26 @@
-package com.example.teduniversite.Security;
-
+package com.example.teduniversite.security.jwt;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import com.example.teduniversite.repository.utilisateurrepository;
+import com.example.teduniversite.security.services.UserDetailsImpl;
+import com.example.teduniversite.entities.utilisateur;
 
+import java.io.IOException;
 import java.util.Date;
-
+@Component
 public class JwtUtils {
-    private UserRepo userRepository;
+    @Autowired
+    private utilisateurrepository userrep;
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     private String jwtSecret="404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
@@ -56,8 +69,8 @@ public class JwtUtils {
         this.jwtExpirationMs = jwtExpirationMs;
     }
     @Transactional
-    public User getUserFromUserName(String username){
-        User u =  userRepository.findByUsername(username).orElse(null);
+    public utilisateur getUserFromUserName(String username){
+        utilisateur u =  userrep.findByUsername(username).orElse(null);
         return u;
     }
 }

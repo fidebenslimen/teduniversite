@@ -1,6 +1,11 @@
-package com.example.teduniversite.Security;
+package com.example.teduniversite.security.services;
 
+import com.example.teduniversite.entities.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import com.example.teduniversite.entities.utilisateur;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class UserDetailsImpl implements UserDetails {
+public class UserDetailsImpl implements UserDetails{
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -31,16 +36,16 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(utilisateur user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRolename().name()))
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(
-                user.getUserid(),
+                user.getId(),
                 user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
+                user.getMail(),
+                user.getMdp(),
                 authorities);
     }
 
@@ -53,12 +58,12 @@ public class UserDetailsImpl implements UserDetails {
         return id;
     }
 
-    public String getEmail() {
+    public String getMail() {
         return email;
     }
 
     @Override
-    public String getPassword() {
+    public String getMdp() {
         return password;
     }
 
@@ -97,7 +102,7 @@ public class UserDetailsImpl implements UserDetails {
         return Objects.equals(id, user.id);
     }
 
-    public List<String> getAuthorities(User user) {
+    public List<String> getAuthorities(utilisateur user) {
         List<String> authorities = new ArrayList<>();
         for (Role role : user.getRoles()) {
             authorities.add(role.getRolename().name());

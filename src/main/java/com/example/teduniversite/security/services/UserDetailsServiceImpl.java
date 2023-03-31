@@ -1,22 +1,23 @@
-package com.example.teduniversite.Security;
+package com.example.teduniversite.security.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.example.teduniversite.repository.utilisateurrepository;
 import com.example.teduniversite.entities.utilisateur;
-
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    utilisateurrepository userrepo;
 
+    @Autowired
+    utilisateurrepository userrep;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        utilisateur user = userrepo.findBy(username)
+      utilisateur  user = userrep.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
         return UserDetailsImpl.build(user);
@@ -32,4 +33,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return authorities;
 
     }*/
+
 }
