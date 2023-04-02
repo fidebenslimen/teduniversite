@@ -21,7 +21,7 @@ public class LoggingAspect {
 
 
 
-    @After("execution("houni user controllergetAllUsers())"")
+   /* @After("execution("houni user controllergetAllUsers())"")*/
     public void logGetAllUsers(JoinPoint joinPoint) {
         log.info("\n******************************************************************************\n" +
                 "GET ALL USERS \n"+"******************************************************************************");

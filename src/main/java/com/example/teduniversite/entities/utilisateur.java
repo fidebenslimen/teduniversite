@@ -5,8 +5,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,14 +28,46 @@ public class utilisateur {
         @Setter
 
         private long id;
-        private String nom;
+    @Size(max = 20)
+    private String username;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
 
-        private String prenom;
-        private String mail;
-        private String username;
-        private String telephone;
-        private String cin;
-        private String mdp;
+    @Size(max = 20)
+    private String firstname;
+    @Size(max = 20)
+    private String lastname;
+
+    private int cin;
+
+    private String etatUser;
+
+
+    @NotBlank
+    @Size(max = 8)
+    @Size(min = 8)
+    @NumberFormat
+    private String phoneNumber;
+
+    @Temporal(value=TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyy-MM-dd")
+
+    private Date dob;
+    @Size(max = 120)
+    private String password;
+    @JsonIgnore
+
+    private int failedLoginAttempts;
+
+
+    @JsonIgnore
+    private int payment_status;
+
+    @JsonIgnore
+    private LocalDateTime creationDate;
+
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,38 +82,47 @@ public class utilisateur {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
     private utilisateur_bloqué ban;
-
-
-
-
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
     public utilisateur() {
-        }
+    }
 
-        public utilisateur(int id, String nom, String prenom, String mail,String username, String telephone, String cin, String mdp, String role) {
-            this.id = id;
-            this.nom = nom;
-            this.prenom = prenom;
-            this.mail = mail;
-            this.username=username;
-            this.telephone = telephone;
-            this.cin = cin;
-            this.mdp = mdp;
-        }
+    public utilisateur(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-        @Override
-        public String toString() {
-            return "utilisateur{" +
-                    "id=" + id +
-                    ", nom='" + nom + '\'' +
-                    ", prenom='" + prenom + '\'' +
-                    ", mail='" + mail + '\'' +
-                    ", telephone='" + telephone + '\'' +
-                    ", cin='" + cin + '\'' +
-                    ", mdp='" + mdp + '\'' +
-                    '}';
-        }
+    public utilisateur(String username, String firstname, String lastname, int cin, Date dob, String password) {
 
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.cin = cin;
+        this.dob = dob;
+        this.password = password;
+    }
+    public utilisateur(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", cin=" + cin +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", dob=" + dob +
+                ", password='" + password + '\'' +
+                ", creationDate=" + creationDate +
+
+                '}';
+    }
 
 
 }

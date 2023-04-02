@@ -1,8 +1,14 @@
 package com.example.teduniversite.controllers;
 
 
+import com.example.teduniversite.dto.UserDTO;
+import com.example.teduniversite.entities.Image;
+import com.example.teduniversite.entities.Role;
 import com.example.teduniversite.entities.TypeRole;
 import com.example.teduniversite.entities.utilisateur;
+import com.example.teduniversite.security.jwt.JwtUtils;
+import com.example.teduniversite.services.IFileLocationService;
+import com.example.teduniversite.services.Iutilisateur;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.example.teduniversite.repository.utilisateurrepository;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -28,6 +35,15 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
    private utilisateurrepository userrep;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    PasswordEncoder encoder;
+    @Autowired
+    IFileLocationService iFileLocationService;
+    @Autowired
+    Iutilisateur iServiceUser;
+
     @GetMapping("/getallusers")
     public List<utilisateur> getAllUsers() {
         return userrep.findAll();
@@ -50,13 +66,14 @@ public class UserController {
                                            @RequestParam String email,
                                            @RequestParam String phoneNumber,
                                            @RequestParam String cin,
+                                           @RequestParam String dob,
                                            @RequestParam String password,
                                            @RequestParam TypeRole typeRole,
                                            HttpServletRequest request) throws Exception {
         if (request != null && request.getHeader(HttpHeaders.AUTHORIZATION) != null) {
             utilisateur authentificateduser = jwtUtils.getUserFromUserName(jwtUtils.getUserNameFromJwtToken(request.getHeader(HttpHeaders.AUTHORIZATION).substring("Bearer ".length())));
-            List<RoleType> roles=authentificateduser.getRoles().stream().map(Role::getRolename).collect(Collectors.toList());
-            if (roles.contains(RoleType.SUPER_ADMIN)) {
+            List<TypeRole> roles=authentificateduser.getRoles().stream().map(Role::getRolename).collect(Collectors.toList());
+            if (roles.contains(TypeRole.Super_Admin)) {
 
                 String user = "{\"username\": \"" + username + "\",   \"email\": \"" + email + "\",   \"firstname\": \"" + firstname + "\",   \"lastname\": \"" + lastname + "\",   \"cin\": " + cin + ",   \"phoneNumber\": \"" + phoneNumber + "\",   \"dob\": \"" + dob + "\",   \"password\": \"" + password + "\" }";
 
@@ -80,7 +97,7 @@ public class UserController {
                 }
 
                 // Create User object
-                User u = new User();
+                utilisateur u = new utilisateur();
                 u.setFirstname(userDTO.getFirstname());
                 u.setCin(userDTO.getCin());
                 u.setLastname(userDTO.getLastname());
@@ -92,7 +109,7 @@ public class UserController {
                 u.setCreationDate(currentDateTime);
                 u.setPhoneNumber(userDTO.getPhoneNumber());
 
-                if (roleType.name().equals("STUDENT")) {
+                if (typeRole.name().equals("STUDENT")) {
                     u.setPayment_status(0);
                 } else {
                     u.setPayment_status(-1);
@@ -100,12 +117,12 @@ public class UserController {
 
                 if (image != null) {
                     System.out.println(image.getOriginalFilename());
-                    Image newImage = iFileLocationService.save(image);
+                     Image newImage = iFileLocationService.save(image);
                     u.setImage(newImage);
                 }
 
                 // Add user and assign role
-                iServiceUser.addUserAndAssignRole(u, roleType);
+                iServiceUser.addUserAndAssignRole(u, typeRole);
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(u.toString());
             } else {
@@ -120,18 +137,18 @@ public class UserController {
 
     @PutMapping(value = "/UPDATE_USER/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = "application/json")
     @ResponseBody
-    public ResponseEntity<User> updateUser(@RequestBody MultipartFile image, @PathVariable long id, @RequestParam(required = false) String username,
+    public ResponseEntity<utilisateur> updateUser(@RequestBody MultipartFile image, @PathVariable long id, @RequestParam(required = false) String username,
                                            @RequestParam(required = false) String firstname,
                                            @RequestParam(required = false) String lastname,
                                            @RequestParam(required = false) String email,
                                            @RequestParam(required = false) String phoneNumber,
                                            @RequestParam(required = false) String dob,
-                                           @RequestParam(required = false) String password, @RequestParam RoleType roleType) throws Exception {
+                                           @RequestParam(required = false) String password, @RequestParam TypeRole typeRole) throws Exception {
 
 
         String user = "{\"username\": \"" + username + "\",   \"email\": \"" + email + "\",   \"firstname\": \"" + firstname + "\",   \"lastname\": \"" + lastname + "\",   \"phoneNumber\": \"" + phoneNumber + "\",   \"dob\": \"" + dob + "\",   \"password\": \"" + password + "\" }";
 
-        User oguser = userRepository.findById(id)
+        utilisateur oguser = userrep.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
 
         System.out.println(oguser);
@@ -174,7 +191,7 @@ public class UserController {
             Image newImage = iFileLocationService.save(image);
             oguser.setImage(newImage);
         }
-        iServiceUser.addUserAndAssignRole(oguser, roleType);
+        iServiceUser.addUserAndAssignRole(oguser, typeRole);
 
         return ResponseEntity.ok(oguser);
     }
@@ -182,71 +199,31 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId)
             throws ResourceNotFoundException {
-        User user = userRepository.findById(userId)
+       utilisateur user = userrep.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
 
-        userRepository.delete(user);
+        userrep.delete(user);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
     }
 
-
-    @PostMapping(value = "/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadUsersFile(@RequestParam("file") MultipartFile file,
-                                                  HttpServletRequest request) throws IOException {
-        List<User> users = iServiceUser.readUsersFromExcelFile(file.getInputStream());
-
-        if (request != null && request.getHeader(HttpHeaders.AUTHORIZATION) != null) {
-            User authentificateduser = jwtUtils.getUserFromUserName(jwtUtils.getUserNameFromJwtToken(request.getHeader(HttpHeaders.AUTHORIZATION).substring("Bearer ".length())));
-            List<RoleType> roles=authentificateduser.getRoles().stream().map(Role::getRolename).collect(Collectors.toList());
-            if (roles.contains(RoleType.SUPER_ADMIN)) {
-
-
-
-                iServiceUser.saveAll(users);
-                return ResponseEntity.ok("Users uploaded successfully.");
-
-
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("YOU NEED TO BE A SUPER ADMIN TO ACCESS THIS ");
-            }
-
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("unauthorized");
-        }
-    }
-
-
-    @GetMapping(value = "/badge/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<FileSystemResource> downloadImage(@PathVariable Long imageId) {
-        try {
-            Badge badge = badgeRepository.findById(imageId).orElse(null);
-            FileSystemResource fileSystemResource = fileSystemRepository.findInFileSystem(badge.getQrCode());
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(fileSystemResource);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
-
     @GetMapping("/FILTER_USERS")
-    public List<User> getUsersByRoleAndYear(@RequestParam(value = "role", required = false) RoleType roleType,
+    public List<utilisateur> getUsersByRoleAndYear(@RequestParam(value = "role", required = false) TypeRole roleType,
                                             @RequestParam(value = "year", required = false) Integer year) {
-        List<User> users = new ArrayList<>();
+        List<utilisateur> users = new ArrayList<>();
         if (roleType != null && year != null) {
             LocalDateTime startOfYear = LocalDateTime.of(year, 1, 1, 0, 0, 0);
             LocalDateTime endOfYear = LocalDateTime.of(year, 12, 31, 23, 59, 59);
-            users = userRepository.findByRolesRolenameAndCreationDateBetween(roleType, startOfYear, endOfYear);
+            users = userrep.findByRolesRolenameAndCreationDateBetween(roleType, startOfYear, endOfYear);
         } else if (roleType != null) {
-            users = userRepository.findByRolesRolename(roleType);
+            users = userrep.findByRolesRolename(roleType);
         } else if (year != null) {
             LocalDateTime startOfYear = LocalDateTime.of(year, 1, 1, 0, 0, 0);
             LocalDateTime endOfYear = LocalDateTime.of(year, 12, 31, 23, 59, 59);
-            users = userRepository.findByCreationDateBetween(startOfYear, endOfYear);
+            users = userrep.findByCreationDateBetween(startOfYear, endOfYear);
         } else {
-            users = userRepository.findAll();
+            users = userrep.findAll();
         }
         return users;
     }
