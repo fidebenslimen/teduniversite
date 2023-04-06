@@ -25,7 +25,7 @@ public class utilisateur {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Getter
-        @Setter
+       @Setter
 
         private long id;
     @Size(max = 20)
@@ -102,7 +102,7 @@ public class utilisateur {
         this.dob = dob;
         this.password = password;
     }
-    public utilisateur(String username, String email, String password) {
+    public utilisateur(String username, String mail, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -118,7 +118,7 @@ public class utilisateur {
                 ", cin=" + cin +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dob=" + dob +
-                ", password='" + password + '\'' +
+                ", password='" + password+ '\'' +
                 ", creationDate=" + creationDate +
 
                 '}';

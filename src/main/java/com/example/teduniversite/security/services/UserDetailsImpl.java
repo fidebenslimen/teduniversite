@@ -44,8 +44,8 @@ public class UserDetailsImpl implements UserDetails{
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
-                user.getMail(),
-                user.getMdp(),
+                user.getEmail(),
+                user.getPassword(),
                 authorities);
     }
 
@@ -58,12 +58,12 @@ public class UserDetailsImpl implements UserDetails{
         return id;
     }
 
-    public String getMail() {
+    public String getEmail() {
         return email;
     }
 
     @Override
-    public String getMdp() {
+    public String getPassword() {
         return password;
     }
 

@@ -1,11 +1,11 @@
-package Configuration;
+package com.example.teduniversite.Configuration;
+import com.twilio.rest.studio.v1.flow.Execution;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
@@ -18,16 +18,16 @@ public class LoggingAspect {
     private MailConfiguration mailConfiguration;
 
     private static final Logger logger = LogManager.getLogger(LoggingAspect.class);
+@After("execution(* com.example.teduniversite.controllers.UserController.getAllUsers())")
 
 
 
-   /* @After("execution("houni user controllergetAllUsers())"")*/
     public void logGetAllUsers(JoinPoint joinPoint) {
         log.info("\n******************************************************************************\n" +
                 "GET ALL USERS \n"+"******************************************************************************");
     }
 
-    @After("execution(* tn.esprit.springfever.controllers.AuthController.signUpV3(..))")
+    @After("execution(* com.example.teduniversite.controllers.AuthController.signUpV3(..))")
     public void logGetUserById(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         String email = (String) args[4]; // assuming the username is the second argument

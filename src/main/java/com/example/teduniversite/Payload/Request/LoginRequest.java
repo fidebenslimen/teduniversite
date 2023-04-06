@@ -1,4 +1,4 @@
-package com.example.teduniversite.Payload;
+package com.example.teduniversite.Payload.Request;
 import javax.validation.constraints.NotBlank;
 public class LoginRequest {
 @NotBlank

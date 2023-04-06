@@ -1,4 +1,4 @@
-package Configuration;
+package com.example.teduniversite.Configuration;
 
 import java.io.IOException;
 import java.nio.file.Files;

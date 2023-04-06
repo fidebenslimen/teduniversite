@@ -1,4 +1,4 @@
-package Configuration;
+package com.example.teduniversite.Configuration;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;

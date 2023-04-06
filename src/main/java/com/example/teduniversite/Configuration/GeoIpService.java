@@ -1,4 +1,4 @@
-package Configuration;
+package com.example.teduniversite.Configuration;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;

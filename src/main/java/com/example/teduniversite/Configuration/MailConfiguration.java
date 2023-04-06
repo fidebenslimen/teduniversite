@@ -1,4 +1,4 @@
-package Configuration;
+package com.example.teduniversite.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,5 +35,5 @@ public class MailConfiguration {
 
 
         getJavaMailSender().send(email);
-    }
-}
+
+}}

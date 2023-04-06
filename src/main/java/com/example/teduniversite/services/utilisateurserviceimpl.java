@@ -1,12 +1,13 @@
 package com.example.teduniversite.services;
 
-import Configuration.GeoIpService;
-import Configuration.MailConfiguration;
-import Configuration.RequestUtils;
+import com.example.teduniversite.Configuration.GeoIpService;
+import com.example.teduniversite.Configuration.MailConfiguration;
+import com.example.teduniversite.Configuration.RequestUtils;
 import com.example.teduniversite.entities.Role;
 import com.example.teduniversite.entities.TypeRole;
 import com.example.teduniversite.entities.utilisateur;
 import com.example.teduniversite.entities.*;
+import org.hibernate.cfg.Configuration;
 import org.springframework.mail.SimpleMailMessage;
 import com.example.teduniversite.repository.BanRepo;
 import com.example.teduniversite.repository.RoleRepos;
@@ -15,11 +16,9 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 import com.example.teduniversite.repository.utilisateurrepository;
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -34,7 +33,7 @@ utilisateurrepository userrep;
 @Autowired
     BanRepo banrepo;
 @Autowired
-    RequestUtils requestUtils;
+RequestUtils requestUtils;
 @Autowired
 GeoIpService geoIpService;
 @Autowired
@@ -109,7 +108,7 @@ GeoIpService geoIpService;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("ACCOUNT SUSPENDED");
         message.setText(emailBody);
-        message.setTo(user.getMail());
+        message.setTo(user.getEmail());
         mailConfiguration.sendEmail(message);
 
 
