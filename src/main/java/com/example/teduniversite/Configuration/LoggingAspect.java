@@ -32,7 +32,7 @@ public class LoggingAspect {
         Object[] args = joinPoint.getArgs();
         String email = (String) args[4]; // assuming the username is the second argument
         String username=(String) args[2];
-        log.info("\n******************************************************************************\n" +
+       /* log.info("\n******************************************************************************\n" +
                 "A USER HAS BEEN ADDED \n" +
                 "email: {}\n" +
                 "******************************************************************************", email);
@@ -44,7 +44,7 @@ public class LoggingAspect {
         message.setSubject("WELCOME TO TED University");
         message.setText(emailBody);
         message.setTo(email);
-        mailConfiguration.sendEmail(message);
+        mailConfiguration.sendEmail(message);*/
     }
 
 }

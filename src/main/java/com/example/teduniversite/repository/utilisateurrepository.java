@@ -21,4 +21,5 @@ public interface utilisateurrepository extends JpaRepository<utilisateur, Long> 
     List<utilisateur> findByCreationDateBetween(LocalDateTime startOfYear, LocalDateTime endOfYear);
 
     Boolean existsByEmail(String email);
+
 }

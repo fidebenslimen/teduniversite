@@ -25,6 +25,8 @@ import java.util.Map;
 @EnableScheduling
 @Slf4j
 public class PaymentService {
+
+    /*
     @Autowired
     private utilisateurrepository userRepository;
 
@@ -110,7 +112,7 @@ public class PaymentService {
 
     //@Scheduled(cron = "0 0 0 * * 0")  //rusn every week
     //@Scheduled(cron = "0 0/3 * * * ?") // Runs every 3 minutes for testing purposes
-    //@Scheduled(cron = "*/5 * * * * *")
+    //@Scheduled(??)
     public void timeoutAccounts() {
         System.out.println("Running timeoutAccounts()...");
         List<utilisateur> users = userRepository.findAll();
@@ -149,5 +151,5 @@ public class PaymentService {
         System.out.println("Finished timeoutAccounts()");
     }
 
-
+*/
 }

@@ -10,7 +10,7 @@ import com.example.teduniversite.security.jwt.JwtUtils;
 import com.example.teduniversite.services.IFileLocationService;
 import com.example.teduniversite.services.Iutilisateur;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;

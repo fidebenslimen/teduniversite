@@ -18,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,7 +45,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/auth" )
 public class AuthController {
     @Autowired
-    AuthenticationManager authenticationManager;
+   private AuthenticationManager authenticationManager;
     @Autowired
     utilisateurrepository userRepository;
     @Autowired
@@ -130,7 +133,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(newPassword));
 
         userRepository.save(user);
-
+    /*
         String emailBody = "Hello " + user.getFirstname() + ",\n\n" +
                 "Your password has been reset. Your new password is: " + newPassword + "\n\n" +
                 "Please change your password after logging in.\n\n" +
@@ -143,7 +146,7 @@ public class AuthController {
         mailConfiguration.sendEmail(message);
 
 
-
+    */
         return ResponseEntity.ok("Password reset successfully. Please check your email.");
     }
 

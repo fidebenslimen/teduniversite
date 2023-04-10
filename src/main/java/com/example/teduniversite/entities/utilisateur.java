@@ -16,12 +16,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.io.Serializable;
 
 @Data
 @Entity
 
 @DiscriminatorColumn(name="utilisateur_type")
-public class utilisateur {
+public class utilisateur implements Serializable {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Getter
@@ -80,8 +81,8 @@ public class utilisateur {
 
     @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
     private utilisateur_bloqué ban;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;

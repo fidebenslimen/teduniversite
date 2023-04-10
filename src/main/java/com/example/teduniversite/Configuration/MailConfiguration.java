@@ -11,7 +11,7 @@ import java.util.Properties;
 
 @Configuration
 public class MailConfiguration {
-
+/*
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -28,7 +28,7 @@ public class MailConfiguration {
 
         return mailSender;
     }
-
+    /*
     @Async
     public void sendEmail(SimpleMailMessage email) {
 
@@ -36,4 +36,5 @@ public class MailConfiguration {
 
         getJavaMailSender().send(email);
 
-}}
+
+}*/}

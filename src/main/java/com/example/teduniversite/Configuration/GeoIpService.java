@@ -22,8 +22,8 @@ import java.net.InetAddress;
 
         @PostConstruct
         public void init() throws IOException {
-            File database = new File(System.getProperty("user.dir")+"/user-service/src/main/resources/GeoLite2-City.mmdb");
-            File database2 = new File(System.getProperty("user.dir")+"/user-service/src/main/resources/GeoLite2-Country.mmdb");
+            File database = new File(System.getProperty("user.dir")+"/src/main/resources/GeoLite2-City.mmdb");
+            File database2 = new File(System.getProperty("user.dir")+"/src/main/resources/GeoLite2-Country.mmdb");
             dbReader = new DatabaseReader.Builder(database).build();
             dbReader2 = new DatabaseReader.Builder(database2).build();
         }

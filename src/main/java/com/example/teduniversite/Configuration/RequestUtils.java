@@ -1,9 +1,10 @@
 package com.example.teduniversite.Configuration;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,9 +12,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 @Component
-@Configuration
+
 public class RequestUtils {
-    @Autowired
+
     private HttpServletRequest request;
 
     private static final String IP_SERVICE_URL = "https://api.ipify.org";

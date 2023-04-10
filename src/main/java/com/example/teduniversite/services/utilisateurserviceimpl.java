@@ -104,12 +104,12 @@ GeoIpService geoIpService;
         String city = GeoIpService.getCity(ipAddress);
         if(city==null){city="ariana soghra";}
         String country = geoIpService.getCountry(ipAddress);
-        String emailBody = "someone signed in with 3 failed attempts from " + country + "," + city + " from the IP adress " + ipAddress + "\n Your Account is temporarily locked. Please try again later.";
+       // String emailBody = "someone signed in with 3 failed attempts from " + country + "," + city + " from the IP adress " + ipAddress + "\n Your Account is temporarily locked. Please try again later.";
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("ACCOUNT SUSPENDED");
-        message.setText(emailBody);
-        message.setTo(user.getEmail());
-        mailConfiguration.sendEmail(message);
+        //message.setSubject("ACCOUNT SUSPENDED");
+        //message.setText(emailBody);
+        //message.setTo(user.getEmail());
+        //mailConfiguration.sendEmail(message);
 
 
     }
