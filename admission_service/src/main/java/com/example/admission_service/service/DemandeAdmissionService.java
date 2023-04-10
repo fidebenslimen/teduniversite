@@ -122,7 +122,7 @@ public class DemandeAdmissionService {
                     "    <p> " + ",</p>\n" +
                     "    <p></p>\n" +
                     "    <p> Greetings,\n" +user.getUsername()+
-                    "<br>Thank you for your interest in ESPRIT.  </p>\n" +
+                    "<br>Thank you for your interest in TED.  </p>\n" +
                     "    <ul>\n" +
                     "      <li>Interview Date:"+ demandeAdmission.getDateAdmission().plusDays(7)+"</li>\n" +
 
@@ -176,7 +176,7 @@ public class DemandeAdmissionService {
                     "    <p> " + ",</p>\n" +
                     "    <p></p>\n" +
                     "    <p> Greetings,\n" +user.getUsername()+
-                    "<br>Thank you for your interest in ESPRIT.  </p>\n" +
+                    "<br>Thank you for your interest in TED.  </p>\n" +
                     "    <ul>\n" +
                     "      <li>Date de le entretien:"+ demandeAdmission.getDateAdmission().plusDays(7)+"</li>\n" +
 
