@@ -273,8 +273,8 @@ public class DemandeAdmissionService {
 
     public Map<String,Long> statDiplome(){
         Map<String,Long> result = new HashMap<>();
-        result.put("PREPA",demandeAdmissionRepository.countByDiplome(Diplome.Mster));
-        result.put("INGENIEURIE",demandeAdmissionRepository.countByDiplome(Diplome.Licence));
+        result.put("Master",demandeAdmissionRepository.countByDiplome(Diplome.Mster));
+        result.put("licence",demandeAdmissionRepository.countByDiplome(Diplome.Licence));
         return result;
 
     }
