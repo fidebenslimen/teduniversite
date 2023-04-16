@@ -3,14 +3,14 @@ package com.example.admission_service.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 @Entity
 @Getter
 @Setter
 public class Salle {
-    @Id
+   @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idsalle;

@@ -3,16 +3,13 @@ package com.example.admission_service.domain;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import jakarta.persistence.*;
 @Entity
 @Data
 @ToString
 public class Image {
-    @Id
-    @GeneratedValue
+   @Id
+   @GeneratedValue
     Long id;
 
     String name;

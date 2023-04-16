@@ -4,7 +4,7 @@ import com.example.admission_service.domain.RDV;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 @Getter
 @Setter

@@ -2,15 +2,14 @@ package com.example.admission_service.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 @Entity
 @Table(name = "\"option\"")
 @Getter
 @Setter
 public class Option {
-    @Id
+  @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOption;

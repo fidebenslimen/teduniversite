@@ -7,16 +7,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 @Configuration
 public class MailConfiguration {
-    @Value("${spring.mail.username}")
+   @Value(value = "springforfever@gmail.com")
     public String mail;
-    @Value("${spring.mail.password}")
+@Value(value = "hdghdbdbjhdgh")
     public String password;
 
     @Bean

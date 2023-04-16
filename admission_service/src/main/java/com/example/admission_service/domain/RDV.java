@@ -3,16 +3,17 @@ package com.example.admission_service.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 @Entity
 @Getter
 @Setter
 public class RDV {
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @Column(nullable = false,updatable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long idRDV;
 
 
@@ -24,9 +25,10 @@ public class RDV {
     @JoinColumn(name = "salle")
     private Salle salle;
 
-    @OneToOne(cascade ={CascadeType.ALL} )
+   @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "demande")
     private DemandeAdmission demande;
+
 
 
 }

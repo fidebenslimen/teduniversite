@@ -2,7 +2,7 @@ package com.example.admission_service.rest;
 
 import com.example.admission_service.domain.Salle;
 import com.example.admission_service.model.SalleDTO;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

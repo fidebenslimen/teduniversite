@@ -1,15 +1,14 @@
 package com.example.admission_service.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import org.springframework.format.annotation.NumberFormat;
 
 import com.example.admission_service.model.Diplome;
 import com.example.admission_service.model.Niveau;
 import com.example.admission_service.model.TypeDemande;
-import com.example.admission_service.domain.RDV;
 
-import javax.persistence.*;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -23,8 +22,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class DemandeAdmission {
-    @Id
-@Column(nullable = false, updatable = false)
+@Id
+@Column(nullable = false,updatable = false)
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long idAdmission;
 
