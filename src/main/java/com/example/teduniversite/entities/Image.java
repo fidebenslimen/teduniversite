@@ -6,19 +6,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Entity
 @Data
 @ToString
-@Getter
-@Setter
-public class Image {
+
+public class Image implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
+    @Getter
+    @Setter
     String name;
 
     String location;
+
 
     @Lob
     byte[] content;

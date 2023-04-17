@@ -6,14 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 @Entity
 @Data
 @ToString
-@Getter
-@Setter
-public class utilisateur_bloqué {
+
+public class utilisateur_bloqué implements Serializable {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +22,8 @@ public class utilisateur_bloqué {
 
     private LocalDateTime expiryTime;
 
-
+    @Getter
+    @Setter
 @OneToOne
     private utilisateur user;
 }

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.NaturalId;
 
 import java.io.Serializable;
@@ -22,11 +21,15 @@ public class Role implements Serializable {
 
 
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    @NaturalId
     private TypeRole rolename;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private Collection<utilisateur> users;
+
 
 
 

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 @Data
 public class UserDTO {
-    private Long id;
+    private Long userid;
     private String username;
     private String firstname;
     private String lastname;

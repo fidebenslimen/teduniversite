@@ -12,7 +12,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +27,7 @@ public class utilisateur implements Serializable {
         @Getter
        @Setter
 
-        private long id;
+        private Long userid;
     @Size(max = 20)
     private String username;
     @NotBlank
@@ -86,28 +85,19 @@ public class utilisateur implements Serializable {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
-    public utilisateur() {
-    }
 
-    public utilisateur(String username, String password) {
+    public utilisateur(Long userid, String username, String email, String firstname, String lastname, int cin, String phoneNumber, Date dob, String password) {
+        this.userid = userid;
         this.username = username;
-        this.password = password;
-    }
-
-    public utilisateur(String username, String firstname, String lastname, int cin, Date dob, String password) {
-
-        this.username = username;
+        this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.cin = cin;
+        this.phoneNumber = phoneNumber;
         this.dob = dob;
         this.password = password;
     }
-    public utilisateur(String username, String mail, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    public utilisateur(){}
 
     @Override
     public String toString() {

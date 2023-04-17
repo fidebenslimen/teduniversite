@@ -58,7 +58,7 @@ GeoIpService geoIpService;
     public utilisateur updateUser(Long id, utilisateur user) {
         utilisateur p = userrep.findById(Long.valueOf(id)).orElse(null);
         if (p != null) {
-            user.setId(p.getId());
+            user.setUserid(p.getUserid());
             userrep.save(user);}
         return p;
     }
@@ -102,7 +102,7 @@ GeoIpService geoIpService;
         String ipAddress = requestUtils.getClientIpAddress();
         System.out.println("******************************" + ipAddress);
         String city = GeoIpService.getCity(ipAddress);
-        if(city==null){city="ariana soghra";}
+        if(city==null){city="charguia";}
         String country = geoIpService.getCountry(ipAddress);
        // String emailBody = "someone signed in with 3 failed attempts from " + country + "," + city + " from the IP adress " + ipAddress + "\n Your Account is temporarily locked. Please try again later.";
         SimpleMailMessage message = new SimpleMailMessage();
