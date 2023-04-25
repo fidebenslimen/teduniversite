@@ -10,8 +10,7 @@ import com.example.teduniversite.services.IFileLocationService;
 import com.example.teduniversite.services.Iutilisateur;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import netscape.javascript.JSException;
-import netscape.javascript.JSObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;

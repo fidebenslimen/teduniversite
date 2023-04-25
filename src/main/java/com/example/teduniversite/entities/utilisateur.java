@@ -19,14 +19,12 @@ import java.io.Serializable;
 
 @Data
 @Entity
-
 @DiscriminatorColumn(name="utilisateur_type")
 public class utilisateur implements Serializable {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Getter
        @Setter
-
         private Long userid;
     @Size(max = 20)
     private String username;

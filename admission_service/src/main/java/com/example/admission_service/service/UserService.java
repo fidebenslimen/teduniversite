@@ -3,7 +3,8 @@ package com.example.admission_service.service;
 import com.example.admission_service.model.UserDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nimbusds.jose.shaded.json.JSONArray;
+import com.nimbusds.jose.shaded.json.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
