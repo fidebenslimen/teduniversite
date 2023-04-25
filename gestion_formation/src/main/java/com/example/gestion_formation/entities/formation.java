@@ -20,4 +20,6 @@ public class formation implements Serializable {
     String nom_formation;
 
 
+
+
 }
