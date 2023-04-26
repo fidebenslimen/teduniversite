@@ -1,109 +1,117 @@
 package com.example.teduniversite.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-@Table(name="utilisateur")
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.io.Serializable;
+
+@Data
 @Entity
-@Inheritance (strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="utilisateur_type")
-public class utilisateur {
-
+public class utilisateur implements Serializable {
         @Id
-        @GeneratedValue(
-                strategy = GenerationType.IDENTITY
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Getter
+       @Setter
+        private Long userid;
+    @Size(max = 20)
+    private String username;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
 
-        )
+    @Size(max = 20)
+    private String firstname;
+    @Size(max = 20)
+    private String lastname;
 
-        private int id;
-        private String nom;
+    private int cin;
 
-        private String prenom;
-        private String mail;
-        private String telephone;
-        private String cin;
-        private String mdp;
+    private String etatUser;
 
 
+    @NotBlank
+    @Size(max = 8)
+    @Size(min = 8)
+    @NumberFormat
+    private String phoneNumber;
+
+    @Temporal(value=TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyy-MM-dd")
+
+    private Date dob;
+    @Size(max = 120)
+    private String password;
+    @JsonIgnore
+
+    private int failedLoginAttempts;
 
 
-    public utilisateur() {
-        }
+    @JsonIgnore
+    private int payment_status;
 
-        public utilisateur(int id, String nom, String prenom, String mail, String telephone, String cin, String mdp, String role) {
-            this.id = id;
-            this.nom = nom;
-            this.prenom = prenom;
-            this.mail = mail;
-            this.telephone = telephone;
-            this.cin = cin;
-            this.mdp = mdp;
-        }
+    @JsonIgnore
+    private LocalDateTime creationDate;
 
-        @Override
-        public String toString() {
-            return "utilisateur{" +
-                    "id=" + id +
-                    ", nom='" + nom + '\'' +
-                    ", prenom='" + prenom + '\'' +
-                    ", mail='" + mail + '\'' +
-                    ", telephone='" + telephone + '\'' +
-                    ", cin='" + cin + '\'' +
-                    ", mdp='" + mdp + '\'' +
-                    '}';
-        }
 
-    public String getTelephone() {
-        return telephone;
-    }
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
+    private Set<Role> roles = new HashSet<>();
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private utilisateur_bloqué ban;
 
-    public String getNom() {
-        return nom;
-    }
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getCin() {
-        return cin;
-    }
-
-    public void setCin(String cin) {
+    public utilisateur(Long userid, String username, String email, String firstname, String lastname, int cin, String phoneNumber, Date dob, String password) {
+        this.userid = userid;
+        this.username = username;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.cin = cin;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.password = password;
+    }
+    public utilisateur(){}
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", cin=" + cin +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", dob=" + dob +
+                ", password='" + password+ '\'' +
+                ", creationDate=" + creationDate +
+
+                '}';
     }
 
-    public String getMdp() {
-        return mdp;
-    }
 
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
-    }
 }
